@@ -35,12 +35,12 @@ public class ExcelConverter implements Converter {
                 options.setPageCount(this.pageCount);
             }
             
-            File tempOutput = File.createTempFile("snapshot_output_", ".pdf");
+            File tempOutput = new File(outputFileName);
             FileOutputStream fwos = new FileOutputStream(tempOutput);
             doc.save(fwos, options);
             fwos.close();
         } catch (Exception ex) {
-            Logger.getAnonymousLogger().log(Level.SEVERE, "Encountered error while converting. {0}", ex);
+            Logger.getAnonymousLogger().log(Level.SEVERE, ex.toString());
         }
     }
 

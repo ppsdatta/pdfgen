@@ -44,7 +44,7 @@ public class PowerPointConverter implements Converter {
             
             fwos.close();
         } catch (Exception ex) {
-            Logger.getAnonymousLogger().log(Level.SEVERE, "Encountered error while converting. {0}", ex);
+            Logger.getAnonymousLogger().log(Level.SEVERE, ex.toString());
         }
     }
 }

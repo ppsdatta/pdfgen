@@ -28,6 +28,14 @@ public class Main {
         
         ConverterBuilder builder = new ConverterBuilder();
         builder.setFileName(args[0]);
-        builder.get();
+        Converter converter = builder.get();
+        
+        if (converter == null) {
+            Logger.getAnonymousLogger().log(Level.SEVERE, "Could not get a matching converter for this file");
+            System.exit(1);
+        }
+        else {
+            converter.convert(args[0], args[1]);
+        }
     }
 }
