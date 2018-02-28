@@ -26,6 +26,9 @@ public class Main {
             System.exit(1);
         }
         
+        System.setProperty("java.awt.headless", "true");
+        Logger.getAnonymousLogger().log(Level.INFO, "Java AWT headless environment =  " + java.awt.GraphicsEnvironment.isHeadless());
+        
         ConverterBuilder builder = new ConverterBuilder();
         builder.setFileName(args[0]);
         Converter converter = builder.get();
