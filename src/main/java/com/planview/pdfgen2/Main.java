@@ -13,7 +13,7 @@ public class Main {
     static {
         try {
             License license = new License();
-            license.setLicense(com.pp.snapshot.LicenseReader.readLicense());
+            license.setLicense(LicenseReader.readLicense());
         } catch (Exception ex) {
             Logger.getAnonymousLogger().warning("No license found, using trial version!");
         }

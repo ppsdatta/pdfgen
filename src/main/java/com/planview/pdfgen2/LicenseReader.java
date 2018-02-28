@@ -1,4 +1,4 @@
-package com.pp.snapshot;
+package com.planview.pdfgen2;
 
 import java.io.File;
 import java.io.FileInputStream;
