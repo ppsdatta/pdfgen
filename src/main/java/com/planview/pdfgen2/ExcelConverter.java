@@ -48,9 +48,9 @@ public class ExcelConverter implements Converter {
             }
             else {
                 File tempOutput = new File(outputFileName);
-                FileOutputStream fwos = new FileOutputStream(tempOutput);
-                doc.save(fwos, options);
-                fwos.close();
+                try (FileOutputStream fwos = new FileOutputStream(tempOutput)) {
+                    doc.save(fwos, options);
+                }
             }
         } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.SEVERE, ex.toString());
