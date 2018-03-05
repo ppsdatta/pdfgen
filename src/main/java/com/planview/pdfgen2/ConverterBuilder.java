@@ -32,18 +32,24 @@ public class ConverterBuilder {
             Converter converter = null;
 
             if (fileType != null) {
-                if (fileType.equals("word")) {
-                    converter = new WordConverter();
-                } else if (fileType.equals("excel")) {
-                    converter = new ExcelConverter();
-                } else if (fileType.equals("ppt")) {
-                    converter = new PowerPointConverter();
+                switch (fileType) {
+                    case "word":
+                        converter = new WordConverter();
+                        break;
+                    case "excel":
+                        converter = new ExcelConverter();
+                        break;
+                    case "ppt":
+                        converter = new PowerPointConverter();
+                        break;
+                    default:
+                        break;
                 }
             } else {
                 if (fileName == null) {
                     return null;
                 }
-                
+
                 Path path = FileSystems.getDefault().getPath(this.fileName);
                 File file = path.toFile();
                 Tika tika = new Tika();

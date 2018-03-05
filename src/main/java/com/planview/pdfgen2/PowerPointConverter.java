@@ -42,23 +42,19 @@ public class PowerPointConverter implements Converter {
                 for (int i = 0; i < this.getPageCount(); i++) {
                     slides[i] = i + 1;
                 }
-                
+
                 if (outputFileName == null) {
                     doc.save(System.out, slides, SaveFormat.Pdf);
-                }
-                else {
+                } else {
                     try (FileOutputStream fos = new FileOutputStream(outputFileName)) {
                         doc.save(fos, slides, SaveFormat.Pdf);
                     }
                 }
+            } else if (outputFileName == null) {
+                doc.save(System.out, SaveFormat.Pdf);
             } else {
-                if (outputFileName == null) {
-                    doc.save(System.out, SaveFormat.Pdf);
-                }
-                else {
-                    try (FileOutputStream fos = new FileOutputStream(outputFileName)) {
-                        doc.save(fos, SaveFormat.Pdf);
-                    }
+                try (FileOutputStream fos = new FileOutputStream(outputFileName)) {
+                    doc.save(fos, SaveFormat.Pdf);
                 }
             }
         } catch (Exception ex) {

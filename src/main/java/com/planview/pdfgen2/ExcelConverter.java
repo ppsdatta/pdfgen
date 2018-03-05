@@ -12,13 +12,13 @@ import java.util.logging.Logger;
  * @author sourav
  */
 public class ExcelConverter implements Converter {
-    
+
     private int pageCount = 0;
-    
+
     public ExcelConverter() {
         this.pageCount = 0;
     }
-    
+
     @Override
     public int getPageCount() {
         return this.pageCount;
@@ -28,25 +28,23 @@ public class ExcelConverter implements Converter {
     public void convert(String inputFileName, String outputFileName) {
         try {
             Workbook doc;
-            
+
             if (inputFileName == null) {
                 doc = new Workbook(System.in);
-            }
-            else {
+            } else {
                 doc = new Workbook(inputFileName);
             }
-            
+
             PdfSaveOptions options = new PdfSaveOptions();
             options.setOnePagePerSheet(true);
-            
+
             if (this.pageCount > 0) {
                 options.setPageCount(this.pageCount);
             }
-            
+
             if (outputFileName == null) {
                 doc.save(System.out, options);
-            }
-            else {
+            } else {
                 File tempOutput = new File(outputFileName);
                 try (FileOutputStream fwos = new FileOutputStream(tempOutput)) {
                     doc.save(fwos, options);
@@ -61,5 +59,5 @@ public class ExcelConverter implements Converter {
     public void setPageCount(int count) {
         this.pageCount = count;
     }
-    
+
 }

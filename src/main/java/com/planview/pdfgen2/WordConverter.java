@@ -3,9 +3,7 @@ package com.planview.pdfgen2;
 import com.aspose.words.Document;
 import com.aspose.words.PdfSaveOptions;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +15,6 @@ public class WordConverter implements Converter {
 
     private int pageCount = 0;
 
-    
     public WordConverter() {
         this.pageCount = 0;
     }
@@ -33,11 +30,10 @@ public class WordConverter implements Converter {
             Document doc;
             if (inputFileName == null) {
                 doc = new Document(System.in);
-            }
-            else {
+            } else {
                 doc = new Document(inputFileName);
             }
-                    
+
             PdfSaveOptions options = new PdfSaveOptions();
 
             if (this.pageCount > 0) {
@@ -46,8 +42,7 @@ public class WordConverter implements Converter {
 
             if (outputFileName == null) {
                 doc.save(System.out, options);
-            }
-            else {
+            } else {
                 File tempOutput = new File(outputFileName);
                 try (FileOutputStream fwos = new FileOutputStream(tempOutput)) {
                     doc.save(fwos, options);
