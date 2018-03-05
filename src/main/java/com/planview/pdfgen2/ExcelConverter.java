@@ -27,7 +27,15 @@ public class ExcelConverter implements Converter {
     @Override
     public void convert(String inputFileName, String outputFileName) {
         try {
-            Workbook doc = new Workbook(inputFileName);
+            Workbook doc;
+            
+            if (inputFileName == null) {
+                doc = new Workbook(System.in);
+            }
+            else {
+                doc = new Workbook(inputFileName);
+            }
+            
             PdfSaveOptions options = new PdfSaveOptions();
             options.setOnePagePerSheet(true);
             
@@ -35,10 +43,15 @@ public class ExcelConverter implements Converter {
                 options.setPageCount(this.pageCount);
             }
             
-            File tempOutput = new File(outputFileName);
-            FileOutputStream fwos = new FileOutputStream(tempOutput);
-            doc.save(fwos, options);
-            fwos.close();
+            if (outputFileName == null) {
+                doc.save(System.out, options);
+            }
+            else {
+                File tempOutput = new File(outputFileName);
+                FileOutputStream fwos = new FileOutputStream(tempOutput);
+                doc.save(fwos, options);
+                fwos.close();
+            }
         } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.SEVERE, ex.toString());
         }

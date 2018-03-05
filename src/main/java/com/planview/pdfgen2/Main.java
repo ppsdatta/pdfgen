@@ -19,18 +19,55 @@ public class Main {
         }
     }
     
+    public static void help() {
+        String message = "Usage of pdfgen:\n" +
+                "1. pdfgen [word|excel|ppt]  --> expects input from stdin and writes to stdout.\n" +
+                "\texample: $ pdfgen ppt < inputfile > outputfile.pdf\n" +
+                "2. pdfgen input_file_path output_file_path --> file type is autodetected from input file name.\n" +
+                "\texample: $ pdfgen /path/to/input/file.xlsx /path/to/output/file.pdf";
+        Logger.getAnonymousLogger().log(Level.INFO, message);
+    }
     
     public static void main(String[] args) {
+        String inFile = null, outFile = null;
+        String fileType = null;
+        
         if (args.length < 2) {
-            Logger.getAnonymousLogger().log(Level.WARNING, "Please provide input and output file paths");
+            if (args.length == 1) {
+                Logger.getAnonymousLogger().log(Level.WARNING, "No input or output file parameters are provided, reading from stdin and writing to stdout");
+                fileType = args[0];
+            }
+            else {
+                Logger.getAnonymousLogger().log(Level.SEVERE, "Either specify filetype to convert - [word|excel|ppt], or both input and output file paths");
+                help();
+                System.exit(1);
+            }
+        }
+        else if (args.length == 2) {
+            inFile = args[0];
+            outFile = args[1];
+        }
+        else {
+            Logger.getAnonymousLogger().log(Level.SEVERE, "Invalid parameters");
+            help();
             System.exit(1);
         }
         
         System.setProperty("java.awt.headless", "true");
-        Logger.getAnonymousLogger().log(Level.INFO, "Java AWT headless environment =  " + java.awt.GraphicsEnvironment.isHeadless());
+        Logger.getAnonymousLogger().log(Level.INFO, "Java AWT headless environment =  {0}", java.awt.GraphicsEnvironment.isHeadless());
         
         ConverterBuilder builder = new ConverterBuilder();
-        builder.setFileName(args[0]);
+        if (fileType == null) {
+            builder.setFileName(args[0]);
+        }
+        else {
+            try {
+                builder.setFileType(fileType);
+            } catch (Exception ex) {
+                Logger.getAnonymousLogger().log(Level.SEVERE, ex.toString());
+            }
+        }
+        
         Converter converter = builder.get();
         
         if (converter == null) {
@@ -38,7 +75,7 @@ public class Main {
             System.exit(1);
         }
         else {
-            converter.convert(args[0], args[1]);
+            converter.convert(inFile, outFile);
         }
     }
 }

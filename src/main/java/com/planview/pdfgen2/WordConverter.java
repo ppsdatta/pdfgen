@@ -3,7 +3,9 @@ package com.planview.pdfgen2;
 import com.aspose.words.Document;
 import com.aspose.words.PdfSaveOptions;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,17 +30,29 @@ public class WordConverter implements Converter {
     @Override
     public void convert(String inputFileName, String outputFileName) {
         try {
-            Document doc = new Document(inputFileName);
+            Document doc;
+            if (inputFileName == null) {
+                doc = new Document(System.in);
+            }
+            else {
+                doc = new Document(inputFileName);
+            }
+                    
             PdfSaveOptions options = new PdfSaveOptions();
 
             if (this.pageCount > 0) {
                 options.setPageCount(this.pageCount);
             }
 
-            File tempOutput = new File(outputFileName);
-            FileOutputStream fwos = new FileOutputStream(tempOutput);
-            doc.save(fwos, options);
-            fwos.close();
+            if (outputFileName == null) {
+                doc.save(System.out, options);
+            }
+            else {
+                File tempOutput = new File(outputFileName);
+                FileOutputStream fwos = new FileOutputStream(tempOutput);
+                doc.save(fwos, options);
+                fwos.close();
+            }
         } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.SEVERE, ex.toString());
         }
