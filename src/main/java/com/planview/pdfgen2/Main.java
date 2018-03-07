@@ -61,14 +61,26 @@ public class Main {
                 System.exit(1);
             }
         }
-
-        Converter converter = builder.get();
+        
+        Converter converter = null;
+        
+        try {
+            converter = builder.get();
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.SEVERE, "Exception while detecting file type: {0}", ex.toString());
+            System.exit(1);
+        }
 
         if (converter == null) {
             Logger.getAnonymousLogger().log(Level.SEVERE, "Could not get a matching converter for this file");
             System.exit(1);
         } else {
-            converter.convert(inFile, outFile);
+            try {
+                converter.convert(inFile, outFile);
+            } catch (Exception ex) {
+                Logger.getAnonymousLogger().log(Level.SEVERE, "Error in converting file to pdf: {0}", ex.toString());
+                System.exit(1);
+            }
         }
     }
 }

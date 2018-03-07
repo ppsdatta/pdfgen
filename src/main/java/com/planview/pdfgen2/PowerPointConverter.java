@@ -25,7 +25,7 @@ public class PowerPointConverter implements Converter {
     }
 
     @Override
-    public void convert(String inputFileName, String outputFileName) {
+    public void convert(String inputFileName, String outputFileName) throws Exception {
         try {
             Presentation doc;
 
@@ -59,6 +59,7 @@ public class PowerPointConverter implements Converter {
             }
         } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.SEVERE, ex.toString());
+            throw ex;
         }
     }
 }

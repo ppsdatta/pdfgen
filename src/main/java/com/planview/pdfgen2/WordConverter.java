@@ -25,7 +25,7 @@ public class WordConverter implements Converter {
     }
 
     @Override
-    public void convert(String inputFileName, String outputFileName) {
+    public void convert(String inputFileName, String outputFileName) throws Exception {
         try {
             Document doc;
             if (inputFileName == null) {
@@ -50,6 +50,7 @@ public class WordConverter implements Converter {
             }
         } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.SEVERE, ex.toString());
+            throw ex;
         }
     }
 

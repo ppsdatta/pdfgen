@@ -25,7 +25,7 @@ public class ExcelConverter implements Converter {
     }
 
     @Override
-    public void convert(String inputFileName, String outputFileName) {
+    public void convert(String inputFileName, String outputFileName) throws Exception {
         try {
             Workbook doc;
 
@@ -52,6 +52,7 @@ public class ExcelConverter implements Converter {
             }
         } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.SEVERE, ex.toString());
+            throw ex;
         }
     }
 
