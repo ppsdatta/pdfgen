@@ -58,6 +58,7 @@ public class Main {
                 builder.setFileType(fileType);
             } catch (Exception ex) {
                 Logger.getAnonymousLogger().log(Level.SEVERE, ex.toString());
+                System.exit(1);
             }
         }
 
